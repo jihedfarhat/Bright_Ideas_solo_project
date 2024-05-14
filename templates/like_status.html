@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Like Status</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container my-5">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <a class="navbar-brand" href="/bright_ideas">Bright Ideas</a>
+        <div class="navbar-nav ml-auto">
+          <a class="nav-link" href="/logout">Logout</a>
+        </div>
+      </nav>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <h3 class="card-title">People who liked this post:</h3>
+          <p class="card-text">
+            {{idea['alias']}} says: {{idea['idea_content']}}
+          </p>
+        </div>
+      </div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Alias</th>
+            <th scope="col">Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in user_who_have_liked %}
+          <tr>
+            <td><a href="">{{user['alias']}}</a></td>
+            <td>{{user['name']}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

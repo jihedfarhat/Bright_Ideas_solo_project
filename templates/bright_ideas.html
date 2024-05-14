@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Bright Ideas</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container my-5">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <span class="navbar-brand">Hi, {{user_data['name']}}!</span>
+        <div class="navbar-nav ml-auto">
+          <a class="nav-link" href="/logout">Logout</a>
+        </div>
+      </nav>
+
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <div class="alert alert-danger">
+        {% for message in messages %}
+        <p>{{message}}</p>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <form action="/process_idea" method="POST">
+            <div class="form-group">
+              <label for="idea-content">Post something witty here:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="idea-content"
+                name="idea_content"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Idea!</button>
+          </form>
+        </div>
+      </div>
+
+      {% for idea in idea_data %}
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">
+            <a href="/users/{{idea['author']}}">{{idea['alias']}}</a>says:
+          </h5>
+          <p class="card-text">{{idea['idea_content']}}</p>
+          {% if idea.author == session['user_id'] %}
+          <a
+            href="/delete_idea/{{idea['idea_id']}}"
+            class="btn btn-danger btn-sm float-right"
+            >X</a
+          >
+          {% endif %}
+          <a
+            href="/like_idea/{{idea['idea_id']}}"
+            class="btn btn-primary btn-sm"
+            >Like</a
+          >
+          <a
+            href="/bright_ideas_details/{{idea['idea_id']}}"
+            class="btn btn-secondary btn-sm"
+            >{{idea['like_count']}} people like this</a
+          >
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
